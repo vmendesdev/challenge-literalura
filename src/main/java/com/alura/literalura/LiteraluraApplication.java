@@ -10,10 +10,8 @@ public class LiteraluraApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(LiteraluraApplication.class, args);
-
-		// Exibe o menu no console após inicialização
-		MenuPrincipal menu = new MenuPrincipal();
-		menu.exibir();
+		MenuPrincipal menuPrincipal = new MenuPrincipal();
+		menuPrincipal.iniciarMenu();
 	}
 }
 

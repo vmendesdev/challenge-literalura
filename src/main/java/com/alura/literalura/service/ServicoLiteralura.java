@@ -23,6 +23,10 @@ public class ServicoLiteralura {
     @Autowired
     private AutorRepositorio autorRepositorio;
 
+    public ServicoLiteralura(ConsumirApi consumoApi) {
+        this.consumoApi = consumoApi;
+    }
+
     /**
      * Busca um livro na API pelo título, cria os objetos Livro e Autor,
      * e os salva no banco de dados.
@@ -32,7 +36,7 @@ public class ServicoLiteralura {
     public void buscarELancarLivro(String titulo) {
         JsonNode resultado = consumoApi.buscarLivroPorTitulo(titulo);
 
-        if (resultado != null && resultado.has("results") && resultado.get("results").size() > 0) {
+        if (resultado != null && resultado.has("results") && !resultado.get("results").isEmpty()) {
             JsonNode livroJson = resultado.get("results").get(0); // pega o primeiro resultado
 
             String tituloLivro = livroJson.get("title").asText();

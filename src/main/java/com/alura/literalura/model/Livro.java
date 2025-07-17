@@ -1,6 +1,7 @@
 package com.alura.literalura.model;
 
 import jakarta.persistence.*;
+
 import java.util.Objects;
 
 @Entity
@@ -9,22 +10,25 @@ public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titulo;
     private String idioma;
 
     @Column(name = "numero_downloads")
     private Integer numeroDownloads;
 
-    @ManyToMany
-    @JoinColumn(name = "autor_id")
+    @ManyToOne
+    @JoinColumn(name = "autor_id", nullable = false)
     private Autor autor;
 
-    public Long getId() {
-        return id;
+    public Livro() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Livro(String titulo, String idioma, Integer numeroDownloads, Autor autor) {
+        this.titulo = titulo;
+        this.idioma = idioma;
+        this.numeroDownloads = numeroDownloads;
+        this.autor = autor;
     }
 
     public String getTitulo() {
@@ -59,12 +63,16 @@ public class Livro {
         this.autor = autor;
     }
 
-    // Dois livros serão iguais se tiverem o mesmo título e idioma
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
         if (!(object instanceof Livro livro)) return false;
         return Objects.equals(titulo, livro.titulo) &&
                 Objects.equals(idioma, livro.idioma);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo, idioma);
     }
 }
